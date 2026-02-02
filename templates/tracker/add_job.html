@@ -1,0 +1,50 @@
+{% extends 'tracker/base.html' %}
+
+{% block content %}
+<h2>Add Job Application</h2>
+
+<form method="post" style="max-width:500px;">
+    {% csrf_token %}
+
+    <label>Company Name</label>
+    <input type="text" name="company" required>
+
+    <label>Job Role</label>
+    <input type="text" name="role" required>
+
+    <label>Status</label>
+    <select name="status">
+        <option>Applied</option>
+        <option>Interview</option>
+        <option>Rejected</option>
+    </select>
+
+    <label>Follow-up Date</label>
+    <input type="date" name="followup">
+
+    <button type="submit">Save Job</button>
+</form>
+
+<style>
+input, select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+}
+button {
+    padding: 12px;
+    width: 100%;
+    background: #1f2937;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+</style>
+
+<label>Notes</label>
+<textarea name="notes" rows="4" placeholder="Interview feedback, HR name..."></textarea>
+<small style="color:#6b7280;">
+Optional – add interview feedback or HR details
+</small>
+
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends 'tracker/base.html' %}
+
+{% block content %}
+<h2>Create Account</h2>
+
+<form method="post" style="max-width:400px;">
+    {% csrf_token %}
+
+    <label>Username</label><br>
+    <input type="text" name="username" required><br><br>
+
+    <label>Password</label><br>
+    <input type="password" name="password1" required><br><br>
+
+    <label>Confirm Password</label><br>
+    <input type="password" name="password2" required><br><br>
+
+    <button type="submit">Register</button>
+
+    <p style="margin-top:10px;">
+        Already have an account?
+        <a href="{% url 'login' %}">Login</a>
+    </p>
+</form>
+
+<style>
+input {
+    width:100%;
+    padding:10px;
+}
+button {
+    background:#38bdf8;
+    border:none;
+    padding:10px;
+    width:100%;
+    cursor:pointer;
+}
+</style>
+{% endblock %}

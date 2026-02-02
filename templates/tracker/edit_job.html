@@ -1,0 +1,77 @@
+{% extends 'tracker/base.html' %}
+{% block content %}
+
+<h2>Edit Job</h2>
+
+<form method="post">
+{% csrf_token %}
+
+<input type="text" name="company" value="{{ job.company }}">
+<input type="text" name="role" value="{{ job.role }}">
+
+<select name="status">
+<option selected>{{ job.status }}</option>
+<option>Applied</option>
+<option>Interview</option>
+<option>Rejected</option>
+</select>
+
+<input type="date" name="followup" value="{{ job.followup_date }}">
+<textarea name="notes">{{ job.notes }}</textarea>
+<small style="color:#6b7280;">
+Optional – add interview feedback or HR details
+</small>
+
+<button>Update</button>
+</form>
+<style>
+input, select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+}
+button {
+    padding: 12px;
+    width: 100%;
+    background: #1f2937;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+
+label {
+    font-weight: 600;
+    margin-bottom: 6px;
+    display: block;
+    color: #1f2937;
+}
+
+textarea {
+    width: 100%;
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid #cbd5f5;
+    font-size: 15px;
+    resize: vertical;
+    outline: none;
+    transition: all 0.3s ease;
+    background: #f9fafb;
+}
+
+/* Focus effect */
+textarea:focus {
+    border-color: #38bdf8;
+    background: #ffffff;
+    box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.3);
+}
+
+/* Placeholder style */
+textarea::placeholder {
+    color: #9ca3af;
+    font-style: italic;
+}
+
+
+</style>
+{% endblock %}

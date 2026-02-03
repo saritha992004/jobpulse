@@ -1,50 +1,152 @@
 {% extends 'tracker/base.html' %}
 
 {% block content %}
-<h2>Add Job Application</h2>
 
-<form method="post" style="max-width:500px;">
-    {% csrf_token %}
+<div class="addjob-wrapper">
+  <div class="addjob-card">
 
-    <label>Company Name</label>
-    <input type="text" name="company" required>
+    <h2>➕ Add Job Application</h2>
+    <p class="subtitle">
+      Save and track your job applications easily
+    </p>
 
-    <label>Job Role</label>
-    <input type="text" name="role" required>
+    <form method="post">
+      {% csrf_token %}
 
-    <label>Status</label>
-    <select name="status">
-        <option>Applied</option>
-        <option>Interview</option>
-        <option>Rejected</option>
-    </select>
+      <div class="field">
+        <label>🏢 Company Name</label>
+        <input type="text" name="company" placeholder="Eg: Google" required>
+      </div>
 
-    <label>Follow-up Date</label>
-    <input type="date" name="followup">
+      <div class="field">
+        <label>💼 Job Role</label>
+        <input type="text" name="role" placeholder="Eg: Frontend Developer" required>
+      </div>
 
-    <button type="submit">Save Job</button>
-</form>
+      <div class="field">
+        <label>📌 Status</label>
+        <select name="status">
+          <option>Applied</option>
+          <option>Interview</option>
+          <option>Rejected</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>⏰ Follow-up Date</label>
+        <input type="date" name="followup">
+      </div>
+
+      <div class="field">
+        <label>📝 Notes</label>
+        <textarea name="notes" rows="4"
+          placeholder="Interview feedback, HR name, salary discussion..."></textarea>
+      </div>
+
+      <button type="submit">💾 Save Application</button>
+    </form>
+
+  </div>
+</div>
 
 <style>
-input, select {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 15px;
+/* ===== Background ===== */
+.addjob-wrapper {
+    min-height: 100vh;
+    background:
+      linear-gradient(rgba(15,23,42,0.75), rgba(15,23,42,0.75)),
+      url("https://images.unsplash.com/photo-1521737604893-d14cc237f11d");
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
 }
-button {
-    padding: 12px;
+
+/* ===== Card ===== */
+.addjob-card {
+    background: rgba(255,255,255,0.15); /* Transparent white */
+    backdrop-filter: blur(15px);        /* Glassmorphism effect */
+    -webkit-backdrop-filter: blur(15px);
     width: 100%;
-    background: #1f2937;
-    color: white;
+    max-width: 480px;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+    border: 1px solid rgba(255,255,255,0.3);
+    color: #ffffff; /* White text for contrast */
+}
+
+/* ===== Headings ===== */
+.addjob-card h2 {
+    text-align: center;
+    margin-bottom: 5px;
+    font-size: 26px;
+    color: #ffffff;
+}
+.subtitle {
+    text-align: center;
+    color: #e0e7ff;
+    margin-bottom: 25px;
+}
+
+/* ===== Fields ===== */
+.field {
+    margin-bottom: 18px;
+}
+label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: #f1f5f9;
+}
+input, select, textarea {
+    width: 100%;
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.3);
+    background: rgba(255,255,255,0.1);
+    font-size: 15px;
+    color: #ffffff;
+}
+input::placeholder, textarea::placeholder {
+    color: #e0e7ff;
+}
+input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: #38bdf8;
+    background: rgba(255,255,255,0.15);
+}
+
+/* ===== Button ===== */
+button {
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(90deg,#38bdf8,#22c55e);
     border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: bold;
     cursor: pointer;
+    color: #ffffff;
+    transition: 0.3s;
+}
+button:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 600px) {
+    .addjob-card {
+        padding: 22px;
+    }
+    .addjob-card h2 {
+        font-size: 22px;
+    }
 }
 </style>
 
-<label>Notes</label>
-<textarea name="notes" rows="4" placeholder="Interview feedback, HR name..."></textarea>
-<small style="color:#6b7280;">
-Optional – add interview feedback or HR details
-</small>
 
 {% endblock %}

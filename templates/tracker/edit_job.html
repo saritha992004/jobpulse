@@ -1,77 +1,146 @@
 {% extends 'tracker/base.html' %}
 {% block content %}
 
-<h2>Edit Job</h2>
+<div class="edit-bg">
+  <div class="edit-overlay">
 
-<form method="post">
-{% csrf_token %}
+    <div class="edit-card">
+      <h2>✏️ Edit Job Application</h2>
+      <p class="subtitle">Update your application details carefully</p>
 
-<input type="text" name="company" value="{{ job.company }}">
-<input type="text" name="role" value="{{ job.role }}">
+      <form method="post">
+        {% csrf_token %}
 
-<select name="status">
-<option selected>{{ job.status }}</option>
-<option>Applied</option>
-<option>Interview</option>
-<option>Rejected</option>
-</select>
+        <div class="field">
+          <label>Company Name</label>
+          <input type="text" name="company" value="{{ job.company }}" required>
+        </div>
 
-<input type="date" name="followup" value="{{ job.followup_date }}">
-<textarea name="notes">{{ job.notes }}</textarea>
-<small style="color:#6b7280;">
-Optional – add interview feedback or HR details
-</small>
+        <div class="field">
+          <label>Job Role</label>
+          <input type="text" name="role" value="{{ job.role }}" required>
+        </div>
 
-<button>Update</button>
-</form>
+        <div class="field">
+          <label>Status</label>
+          <select name="status">
+            <option selected>{{ job.status }}</option>
+            <option>Applied</option>
+            <option>Interview</option>
+            <option>Rejected</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label>Follow-up Date</label>
+          <input type="date" name="followup" value="{{ job.followup_date }}">
+        </div>
+
+        <div class="field">
+          <label>Notes</label>
+          <textarea name="notes" rows="4"
+            placeholder="Interview feedback, HR name, remarks...">{{ job.notes }}</textarea>
+        </div>
+
+        <button type="submit">💾 Update Application</button>
+      </form>
+    </div>
+
+  </div>
+</div>
+
 <style>
-input, select {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 15px;
+/* BACKGROUND */
+.edit-bg {
+  min-height: 100vh;
+  background-image: url("https://images.unsplash.com/photo-1507679799987-c73779587ccf");
+  background-size: cover;
+  background-position: center;
 }
-button {
-    padding: 12px;
-    width: 100%;
-    background: #1f2937;
-    color: white;
-    border: none;
-    cursor: pointer;
+.edit-overlay {
+  min-height: 100vh;
+  background: rgba(15,23,42,0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 30px;
 }
 
+/* GLASS CARD */
+.edit-card {
+  width: 100%;
+  max-width: 520px;
+  background: rgba(255,255,255,0.12);
+  backdrop-filter: blur(14px);
+  border-radius: 20px;
+  padding: 35px;
+  color: white;
+  box-shadow: 0 25px 50px rgba(0,0,0,0.4);
+}
 
+.edit-card h2 {
+  margin-bottom: 5px;
+}
+.subtitle {
+  color: #cbd5f5;
+  font-size: 14px;
+  margin-bottom: 25px;
+}
+
+/* FORM */
+.field {
+  margin-bottom: 18px;
+}
 label {
-    font-weight: 600;
-    margin-bottom: 6px;
-    display: block;
-    color: #1f2937;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 6px;
+  display: block;
+}
+
+input, select, textarea {
+  width: 100%;
+  padding: 12px;
+  border-radius: 10px;
+  border: none;
+  font-size: 15px;
+  outline: none;
+  background: rgba(255,255,255,0.9);
 }
 
 textarea {
-    width: 100%;
-    padding: 12px;
-    border-radius: 10px;
-    border: 1px solid #cbd5f5;
-    font-size: 15px;
-    resize: vertical;
-    outline: none;
-    transition: all 0.3s ease;
-    background: #f9fafb;
+  resize: vertical;
 }
 
-/* Focus effect */
-textarea:focus {
-    border-color: #38bdf8;
-    background: #ffffff;
-    box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.3);
+input:focus, select:focus, textarea:focus {
+  box-shadow: 0 0 0 3px rgba(56,189,248,0.5);
 }
 
-/* Placeholder style */
-textarea::placeholder {
-    color: #9ca3af;
-    font-style: italic;
+/* BUTTON */
+button {
+  width: 100%;
+  padding: 14px;
+  background: #38bdf8;
+  color: black;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: all 0.3s ease;
+}
+button:hover {
+  background: #0ea5e9;
+  transform: translateY(-2px);
 }
 
-
+/* RESPONSIVE */
+@media (max-width: 600px) {
+  .edit-card {
+    padding: 25px;
+  }
+}
 </style>
+
 {% endblock %}

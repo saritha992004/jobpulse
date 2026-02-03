@@ -1,39 +1,138 @@
 {% extends 'tracker/base.html' %}
 
 {% block content %}
-<h2>Create Account</h2>
-
-<form method="post" style="max-width:400px;">
-    {% csrf_token %}
-
-    <label>Username</label><br>
-    <input type="text" name="username" required><br><br>
-
-    <label>Password</label><br>
-    <input type="password" name="password1" required><br><br>
-
-    <label>Confirm Password</label><br>
-    <input type="password" name="password2" required><br><br>
-
-    <button type="submit">Register</button>
-
-    <p style="margin-top:10px;">
-        Already have an account?
-        <a href="{% url 'login' %}">Login</a>
-    </p>
-</form>
 
 <style>
-input {
-    width:100%;
-    padding:10px;
+/* Full screen background */
+.auth-wrapper {
+    min-height: 100vh;
+    background: linear-gradient(
+        rgba(15, 23, 42, 0.75),
+        rgba(15, 23, 42, 0.75)
+    ),
+    url("https://images.unsplash.com/photo-1507679799987-c73779587ccf")
+    center/cover no-repeat;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
 }
-button {
-    background:#38bdf8;
-    border:none;
-    padding:10px;
-    width:100%;
-    cursor:pointer;
+
+/* Glass card */
+.auth-card {
+    width: 100%;
+    max-width: 420px;
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(14px);
+    border-radius: 18px;
+    padding: 35px;
+    color: white;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+    animation: fadeUp 0.7s ease;
+}
+
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.auth-card h2 {
+    text-align: center;
+    margin-bottom: 10px;
+    font-size: 28px;
+}
+
+.auth-card p {
+    text-align: center;
+    font-size: 14px;
+    color: #e5e7eb;
+    margin-bottom: 25px;
+}
+
+/* Inputs */
+.auth-card input {
+    width: 100%;
+    padding: 12px 14px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+    border: none;
+    outline: none;
+    font-size: 15px;
+}
+
+/* Button */
+.auth-card button {
+    width: 100%;
+    padding: 12px;
+    background: linear-gradient(135deg, #38bdf8, #0ea5e9);
+    border: none;
+    border-radius: 12px;
+    color: #020617;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.auth-card button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(56,189,248,0.5);
+}
+
+/* Extra text */
+.auth-footer {
+    text-align: center;
+    margin-top: 18px;
+    font-size: 14px;
+}
+
+.auth-footer a {
+    color: #38bdf8;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.features {
+    margin-top: 25px;
+    font-size: 13px;
+    color: #e5e7eb;
+}
+
+.features li {
+    margin-bottom: 8px;
 }
 </style>
+
+<div class="auth-wrapper">
+    <div class="auth-card">
+
+        <h2>Create your JobPulse account 🚀</h2>
+        <p>Track applications, interviews & follow-ups in one smart dashboard</p>
+
+        <form method="post">
+            {% csrf_token %}
+
+            <input type="text" name="username" placeholder="Username" required>
+            <input type="password" name="password1" placeholder="Password" required>
+            <input type="password" name="password2" placeholder="Confirm Password" required>
+
+            <button type="submit">Create Account</button>
+        </form>
+
+        <div class="auth-footer">
+            Already have an account?
+            <a href="{% url 'login' %}">Login</a>
+        </div>
+
+        <ul class="features">
+            <li>✔ Real-time job application tracking</li>
+            <li>✔ Interview & follow-up reminders</li>
+            <li>✔ Clean dashboard & analytics</li>
+            <li>✔ Built for freshers & professionals</li>
+        </ul>
+
+    </div>
+</div>
+
 {% endblock %}

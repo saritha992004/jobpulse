@@ -40,6 +40,7 @@ def register_view(request):
     return render(request, 'tracker/register.html')
 
 
+
 def login_view(request):
     if request.method == 'POST':
         username = request.POST['username']

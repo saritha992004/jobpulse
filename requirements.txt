@@ -5,3 +5,4 @@ mysql-connector-python==9.5.0
 packaging==26.0
 sqlparse==0.5.5
 tzdata==2025.3
+psycopg[binary]

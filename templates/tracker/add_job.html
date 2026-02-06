@@ -25,7 +25,7 @@
 
       <div class="field">
         <label>📌 Status</label>
-        <select name="status">
+        <select name="status" class="status">
           <option>Applied</option>
           <option>Interview</option>
           <option>Rejected</option>
@@ -34,7 +34,7 @@
 
       <div class="field">
         <label>⏰ Follow-up Date</label>
-        <input type="date" name="followup">
+        <input type="date" name="followup_date">
       </div>
 
       <div class="field">
@@ -100,6 +100,9 @@ label {
     font-weight: 600;
     margin-bottom: 6px;
     color: #f1f5f9;
+}
+.status option{
+color:black;
 }
 input, select, textarea {
     width: 100%;

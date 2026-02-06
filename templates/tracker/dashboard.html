@@ -2,40 +2,78 @@
 {% block content %}
 
 <style>
-/* ========== RESET ========== */
-* {
+/* ================= DASHBOARD FIX ================= */
+
+/* ---------- GLOBAL RESET ---------- */
+*,
+*::before,
+*::after {
     box-sizing: border-box;
+}
+
+/* ---------- OVERRIDE BOOTSTRAP .container ---------- */
+/* The base.html wraps content in .container which adds
+   padding + max-width, clipping the dashboard on mobile.
+   We override it to be full-width for this page. */
+.container {
+    max-width: 100% !important;
+    width: 100% !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+/* ---------- WRAPPER ---------- */
+.dashboard-wrapper {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    /* NO overflow-x:hidden -- that clips content instead of fixing it */
 }
 
 /* ========== HERO SECTION ========== */
 .dashboard-hero {
-    min-height: 50vh;
     background:
-        linear-gradient(rgba(2,6,23,0.65), rgba(2,6,23,0.65)),
+        linear-gradient(rgba(2, 6, 23, 0.65), rgba(2, 6, 23, 0.65)),
         url("https://images.unsplash.com/photo-1521737604893-d14cc237f11d");
     background-size: cover;
     background-position: center;
     padding: 60px 8%;
-    border-radius: 20px;
     color: white;
-    margin-bottom: 40px;
+    margin-top: 0;
+    height:400px;
+    border-radius:20px;
+
 }
 
-/* HEADER */
+/* ========== HEADER ========== */
 .dash-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 30px;
+    gap: 15px;
+    flex-wrap: wrap;
 }
+
+.dash-header > div:last-child {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
 .dash-header h1 {
     margin: 0;
     font-size: 2.6rem;
+    overflow-wrap: break-word;
+    word-break: break-word;
 }
+
 .dash-header p {
     margin-top: 6px;
     color: #cbd5f5;
 }
+
 .btn-main {
     background: #38bdf8;
     padding: 12px 22px;
@@ -43,209 +81,479 @@
     text-decoration: none;
     color: #020617;
     font-weight: 600;
+    display: inline-block;
+    transition: background 0.3s ease;
+    white-space: nowrap;
 }
 
-/* ========== STATS (GRID – IMPORTANT) ========== */
+.btn-main:hover,
+.btn-main:focus {
+    background: #0ea5e9;
+    color: #020617;
+    outline: none;
+    text-decoration: none;
+}
+
+/* ========== STATS ========== */
 .stats-wrapper {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 20px;
 }
+
 .stat {
     padding: 20px;
     border-radius: 16px;
     text-align: center;
     backdrop-filter: blur(12px);
-    background: rgba(255,255,255,0.12);
     color: white;
 }
-.stat h2 {
-    margin: 0;
-    font-size: 28px;
-}
-.stat span {
-    font-size: 14px;
-}
-.stat.blue { background: rgba(14,165,233,0.45); }
-.stat.green { background: rgba(34,197,94,0.45); }
-.stat.red { background: rgba(239,68,68,0.45); }
 
-/* ========== WHITE CONTENT SECTION ========== */
+.stat h2 {
+    margin: 0 0 4px 0;
+}
+
+.stat.blue  { background: rgba(14, 165, 233, 0.45); }
+.stat.green { background: rgba(34, 197, 94, 0.45); }
+.stat.red   { background: rgba(239, 68, 68, 0.45); }
+
+/* ========== CONTENT SECTION ========== */
 .dashboard-content {
+    flex: 1;
     background: #f8fafc;
     padding: 60px 8%;
+    width: 100%;
 }
 
-/* GRID */
+/* ========== GRID ========== */
 .grid {
     display: grid;
     grid-template-columns: 2fr 1fr;
     gap: 30px;
+    width: 100%;
+    /* Prevent grid children from overflowing */
+    min-width: 0;
 }
 
-/* CARDS */
+/* Prevent grid children from overflowing their cell */
+.grid > div {
+    min-width: 0;
+}
+
+/* ========== CARDS ========== */
 .card {
     background: white;
     padding: 25px;
     border-radius: 20px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
     margin-bottom: 25px;
-}
-.card h3 {
-    margin-bottom: 12px;
-    font-size: 20px;
+    width: 100%;
+    /* Allow internal scrolling for table, prevent clip */
+    overflow: hidden;
+    overflow-wrap: break-word;
+    word-break: break-word;
 }
 
-/* TABLE */
+.card h3 {
+    margin: 0 0 5px 0;
+}
+
+.card p {
+    margin: 10px 0;
+}
+
+.card:last-child {
+    margin-bottom: 0;
+}
+
+/* ========== SEARCH BAR ========== */
+.search-box {
+    margin: 20px 0;
+}
+
+.search-box form {
+    display: flex;
+    align-items: center;
+    background: #f1f5f9;
+    border-radius: 14px;
+    padding: 8px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    gap: 8px;
+}
+
+.search-box input {
+    flex: 1;
+    min-width: 0;  /* Critical: allows input to shrink below its default size */
+    border: none;
+    outline: none;
+    background: transparent;
+    padding: 12px 14px;
+    font-size: 15px;
+}
+
+.search-box button {
+    background: #38bdf8;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    flex-shrink: 0;
+    color: #020617;
+    font-weight: 500;
+}
+
+.search-box button:hover,
+.search-box button:focus {
+    background: #0ea5e9;
+    outline: none;
+}
+
+/* ========== TABLE ========== */
+.table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
 table {
     width: 100%;
     border-collapse: collapse;
+    min-width: 480px; /* Slightly smaller to fit better on small screens */
 }
+
 th, td {
     padding: 14px;
     border-bottom: 1px solid #e5e7eb;
-    font-size: 14px;
-}
-th {
-    background: #f1f5f9;
     text-align: left;
 }
 
-/* BADGES */
+th {
+    background: #f1f5f9;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+td {
+    overflow-wrap: break-word;
+    word-break: break-word;
+    font-size:10;                                                                                               px;
+}
+
+/* ========== BADGES ========== */
 .badge {
     padding: 6px 12px;
     border-radius: 20px;
-    font-size: 13px;
     color: white;
+    font-size: 13px;
+    display: inline-block;
+    white-space: nowrap;
 }
-.Applied { background: #0ea5e9; }
-.Interview { background: #22c55e; }
-.Rejected { background: #ef4444; }
 
-/* FOLLOWUPS */
-.followups li {
+.Applied   { background: #0ea5e9; }
+.Interview { background: #22c55e; }
+.Rejected  { background: #ef4444; }
+
+/* ========== FOLLOWUPS ========== */
+.followups {
     list-style: none;
+    padding: 0;
+    margin: 10px 0 0 0;
+}
+
+.followups li {
     padding: 12px;
     margin-bottom: 10px;
     border-radius: 12px;
     background: #e2e8f0;
+    overflow-wrap: break-word;
+    word-break: break-word;
 }
 
-/* ========== MEDIA QUERIES (RESPONSIVE) ========== */
+.followups li:last-child {
+    margin-bottom: 0;
+}
 
-/* Tablet */
+/* ========== ACTION BUTTONS ========== */
+.btn-edit {
+    padding: 6px 10px;
+    background: #2563eb;
+    color: white;
+    border-radius: 6px;
+    text-decoration: none;
+    display: inline-block;
+    transition: background 0.3s ease;
+    white-space: nowrap;
+}
+
+.btn-edit:hover,
+.btn-edit:focus {
+    background: #1d4ed8;
+    color: white;
+    outline: none;
+    text-decoration: none;
+}
+
+.btn-delete {
+    padding: 6px 10px;
+    background: #dc2626;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    white-space: nowrap;
+}
+
+.btn-delete:hover,
+.btn-delete:focus {
+    background: #b91c1c;
+    outline: none;
+}
+
+/* ===================================================
+   RESPONSIVE
+   =================================================== */
+
+/* ---------- Tablet (max-width: 992px) ---------- */
 @media (max-width: 992px) {
-    .dash-header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 15px;
-    }
     .stats-wrapper {
         grid-template-columns: repeat(2, 1fr);
     }
+
     .grid {
         grid-template-columns: 1fr;
     }
+
+    .dashboard-hero,
+    .dashboard-content {
+        padding: 40px 5%;
+    }
+    .dashboard-hero{
+    height:450px;
+    }
 }
 
-/* Mobile */
+/* ---------- Mobile (max-width: 576px) ---------- */
 @media (max-width: 576px) {
-    .dashboard-hero {
-        padding: 40px 20px;
+    .dashboard-hero,
+    .dashboard-content {
+        padding: 20px 12px;
     }
+.dashboard-hero{
+height:500px;
+}
+    .dash-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
     .dash-header h1 {
-        font-size: 2rem;
+        font-size: 1.6rem;
     }
-    .btn-main {
+
+    .dash-header > div:last-child {
         width: 100%;
+    }
+
+    .dash-header > div:last-child a {
+        flex: 1;
         text-align: center;
     }
+
     .stats-wrapper {
         grid-template-columns: 1fr;
+        gap: 12px;
     }
+
+    .stat {
+        padding: 16px;
+    }
+
+    .stat h2 {
+        font-size: 1.5rem;
+    }
+
+    .card {
+        padding: 16px;
+        border-radius: 14px;
+        margin-bottom: 16px;
+    }
+
+    .search-box form {
+        padding: 6px;
+    }
+
+    .search-box input {
+        padding: 10px;
+        font-size: 14px;
+    }
+
+    .search-box button {
+        padding: 10px 14px;
+        font-size: 14px;
+    }
+
+    table {
+        font-size: 14px;
+        min-width: 440px;
+    }
+
+    th, td {
+        padding: 10px 8px;
+    }
+
+    .followups li {
+        font-size: 14px;
+        padding: 10px;
+    }
+
+    .grid {
+        gap: 16px;
+    }
+}
+
+/* ---------- Very small screens (max-width: 360px) ---------- */
+@media (max-width: 360px) {
+    .dashboard-hero,
     .dashboard-content {
-        padding: 40px 20px;
+        padding: 16px 8px;
+    }
+
+    .dash-header h1 {
+        font-size: 1.4rem;
+    }
+
+    .btn-main {
+        padding: 10px 16px;
+        font-size: 14px;
+    }
+
+    .card {
+        padding: 12px;
     }
 }
 </style>
 
-<!-- ========== HERO ========== -->
-<div class="dashboard-hero">
-    <div class="dash-header">
-        <div>
-            <h1>JobPulse Dashboard 🚀</h1>
-            <p>Track • Improve • Succeed</p>
-        </div>
-        <a href="{% url 'add_job' %}" class="btn-main">+ Add Job</a>
-    </div>
+<div class="dashboard-wrapper">
 
-    <div class="stats-wrapper">
-        <div class="stat blue">
-            <h2>{{ total }}</h2>
-            <span>Applied</span>
-        </div>
-        <div class="stat green">
-            <h2>{{ interviews }}</h2>
-            <span>Interview</span>
-        </div>
-        <div class="stat red">
-            <h2>{{ rejected }}</h2>
-            <span>Rejected</span>
-        </div>
-    </div>
-</div>
-
-<!-- ========== CONTENT ========== -->
-<div class="dashboard-content">
-    <div class="grid">
-
-        <!-- LEFT -->
-        <div>
-            <div class="card">
-                <h3>🔥 Daily Motivation</h3>
-                <p>Every rejection is redirection. Stay consistent.</p>
+    <!-- HERO -->
+    <div class="dashboard-hero">
+        <div class="dash-header">
+            <div>
+                <h1>JobPulse Dashboard 🚀</h1>
+                <p>Track - Improve - Succeed</p>
             </div>
-
-            <div class="card">
-                <h3>📁 Applications</h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Company</th>
-                            <th>Role</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    {% for job in jobs %}
-                        <tr>
-                            <td>{{ job.company }}</td>
-                            <td>{{ job.role }}</td>
-                            <td><span class="badge {{ job.status }}">{{ job.status }}</span></td>
-                        </tr>
-                    {% empty %}
-                        <tr><td colspan="3">No jobs yet</td></tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
+            <div>
+                <a href="{% url 'add_job' %}" class="btn-main" aria-label="Add a new job">+ Add Job</a>
+                <a href="{% url 'add_from_email' %}" class="btn-main" aria-label="Add job from email">From Email</a>
             </div>
         </div>
 
-        <!-- RIGHT -->
-        <div>
-            <div class="card">
-                <h3>⏰ Follow Ups</h3>
-                <ul class="followups">
-                    {% for job in jobs %}
-                        {% if job.followup_date %}
-                        <li>{{ job.company }}<br>{{ job.followup_date }}</li>
-                        {% endif %}
-                    {% endfor %}
-                </ul>
+        <div class="stats-wrapper">
+            <div class="stat blue">
+                <h2>{{ total }}</h2>
+                <span>Applied</span>
+            </div>
+            <div class="stat green">
+                <h2>{{ interviews }}</h2>
+                <span>Interview</span>
+            </div>
+            <div class="stat red">
+                <h2>{{ rejected }}</h2>
+                <span>Rejected</span>
             </div>
         </div>
-
     </div>
+
+    <!-- CONTENT -->
+    <div class="dashboard-content">
+        <div class="grid">
+
+            <!-- LEFT COLUMN -->
+            <div>
+                <div class="card">
+                    <h3>🔥 Daily Motivation</h3>
+                    <p>Every rejection is redirection. Stay consistent.</p>
+                </div>
+
+                <div class="card">
+                    <h3>📁 Applications</h3>
+
+                    <!-- SEARCH BAR -->
+                    <div class="search-box">
+                        <form method="GET">
+                            <input
+                                type="text"
+                                name="q"
+                                placeholder="Search by Company, Role or Status"
+                                value="{{ request.GET.q }}"
+                                aria-label="Search applications"
+                            >
+                            <button type="submit" aria-label="Search">🔍</button>
+                        </form>
+                    </div>
+
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Company</th>
+                                    <th>Role</th>
+                                    <th>Status</th>
+                                    <th>Edit</th>
+                                    <th>Delete</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {% for job in jobs %}
+                                <tr>
+                                    <td>{{ job.company }}</td>
+                                    <td>{{ job.role }}</td>
+                                    <td>
+                                        <span class="badge {{ job.status }}">
+                                            {{ job.status }}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <a href="{% url 'edit_job' job.id %}" class="btn-edit" aria-label="Edit {{ job.company }}">✏️</a>
+                                    </td>
+                                    <td>
+                                        <form method="POST" action="{% url 'delete_job' job.id %}">
+                                            {% csrf_token %}
+                                            <button class="btn-delete" aria-label="Delete {{ job.company }}">🗑️</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            {% empty %}
+                                <tr>
+                                    <td colspan="5" style="text-align:center;">No jobs yet</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RIGHT COLUMN -->
+            <div>
+                <div class="card">
+                    <h3> ⏰ Follow Ups</h3>
+                    <ul class="followups">
+                        {% for job in jobs %}
+                            {% if job.followup_date %}
+                                <li>{{ job.company }}<br>{{ job.followup_date }}</li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
 </div>
 
 {% endblock %}

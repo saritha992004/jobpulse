@@ -129,4 +129,6 @@ LOGIN_URL = '/accounts/login/'
 LOGOUT_REDIRECT_URL = '/login/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
+MIGRATION_MODULES = {"tracker": None}
+
 
